@@ -5,7 +5,7 @@ Examples
 ----------------------------------------------------------------------------
 /create
 
-curl --location --request POST 'http://kindgeek/web/account/create' \
+curl --location --request POST 'http://localhost:8080/account/create' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "first_name": "Ivan",
@@ -15,7 +15,7 @@ curl --location --request POST 'http://kindgeek/web/account/create' \
 ----------------------------------------------------------------------------
 /accrue
 
-curl --location --request POST 'http://kindgeek/web/account/accrue' \
+curl --location --request POST 'http://localhost:8080/account/accrue' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "account_number": "UAFF5BBD520D867A5C8F992E80A8235F69",
@@ -25,7 +25,7 @@ curl --location --request POST 'http://kindgeek/web/account/accrue' \
 ----------------------------------------------------------------------------
 /lock
 
-curl --location --request POST 'http://kindgeek/web/account/lock' \
+curl --location --request POST 'http://localhost:8080/account/lock' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "account_number": "UAFF5BBD520D867A5C8F992E80A8235F69",
@@ -35,12 +35,12 @@ curl --location --request POST 'http://kindgeek/web/account/lock' \
 ----------------------------------------------------------------------------
 /view
 
-curl --location --request GET 'http://kindgeek/web/account/view?account_number=UAFF5BBD520D867A5C8F992E80A8235F69'
+curl --location --request GET 'http://localhost:8080/account/view?account_number=UAFF5BBD520D867A5C8F992E80A8235F69'
 
 ----------------------------------------------------------------------------
 /transfer
 
-curl --location --request POST 'http://kindgeek/web/account/transfer' \
+curl --location --request POST 'http://localhost:8080/account/transfer' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "donor": "UAF22AB2C0AA94674130257C257F63478D",

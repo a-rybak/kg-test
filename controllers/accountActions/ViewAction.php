@@ -2,13 +2,12 @@
 
 namespace app\controllers\accountActions;
 
-use app\models\Account;
 use Yii;
 use yii\rest\Action;
-use yii\web\ServerErrorHttpException;
 
 class ViewAction extends Action
 {
+    use ActionTrait;
 
     public function run()
     {
@@ -16,16 +15,7 @@ class ViewAction extends Action
             call_user_func($this->checkAccess, $this->id);
         }
 
-
-        $params = Yii::$app->getRequest()->getQueryParams();
-
-        if (!empty($params['account_number'])) {
-            $model = Account::findByAccountNumber($params['account_number']);
-        } else {
-            throw new ServerErrorHttpException('Unable to find the account');
-        }
-
-        return $model;
+        return $this->getAccount(Yii::$app->getRequest()->getQueryParams());
     }
 
 }

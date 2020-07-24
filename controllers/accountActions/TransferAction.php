@@ -10,20 +10,19 @@ use yii\web\ServerErrorHttpException;
 
 class TransferAction extends Action
 {
+    use ActionTrait;
+
     public function run()
     {
         $params = Yii::$app->getRequest()->getBodyParams();
 
-        if (!empty($params['donor'])) {
-            $modelDonor = Account::findByAccountNumber($params['donor']);
-        } else {
-            throw new ServerErrorHttpException('Unable to find the donor\'s account');
-        }
+        /* @var $modelDonor Account */
+        /* @var $modelRecipient Account */
+        $modelDonor = $this->getAccount($params, 'donor');
+        $modelRecipient = $this->getAccount($params, 'recipient');
 
-        if (!empty($params['recipient'])) {
-            $modelRecipient = Account::findByAccountNumber($params['recipient']);
-        } else {
-            throw new ServerErrorHttpException('Unable to find the recipient\'s account');
+        if ($modelDonor->account_number == $modelRecipient->account_number){
+            return ['status' => Account::STATUS_FAIL, 'reason' => 'Account numbers can not be equal'];
         }
 
         // if amount is not empty and valid value - increase recipient's  available amount and decrease the donor's available one

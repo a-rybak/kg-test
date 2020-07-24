@@ -9,20 +9,23 @@ use yii\web\ServerErrorHttpException;
 
 class LockAction extends Action
 {
+    use ActionTrait;
+
     public function run()
     {
         $params = Yii::$app->getRequest()->getBodyParams();
 
-        if (!empty($params['account_number'])) {
-            $model = Account::findByAccountNumber($params['account_number']);
-        } else {
-            throw new ServerErrorHttpException('Unable to find the account');
-        }
+        /* @var $model Account|array */
+        $model = $this->getAccount($params);
+        if (is_array($model))
+            return $model;
 
         // if amount is not empty and valid value - increase locked user's amount and decrease the available one
         if (!empty($params['amount']) && intval($params['amount'])){
             $model->locked_amount += intval($params['amount']);
             $model->available_amount -= intval($params['amount']);
+        }  else {
+            throw new ServerErrorHttpException('Amount is missing');
         }
 
         if ($model->save()) {

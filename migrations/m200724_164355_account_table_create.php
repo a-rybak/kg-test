@@ -4,9 +4,9 @@ use yii\db\Migration;
 use yii\db\Schema;
 
 /**
- * Class m200723_144355_customer_table_create
+ * Class m200724164355account_table_create
  */
-class m200723_144355_customer_table_create extends Migration
+class m200724_164355_account_table_create extends Migration
 {
     /**
      * {@inheritdoc}
@@ -20,6 +20,8 @@ class m200723_144355_customer_table_create extends Migration
             'account_number' => $this->string(34)->unique(),
             'available_amount' => $this->integer()->defaultValue(0),
             'locked_amount' => $this->integer()->defaultValue(0),
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
         ]);
     }
 
@@ -40,7 +42,7 @@ class m200723_144355_customer_table_create extends Migration
 
     public function down()
     {
-        echo "m200723_144355_customer_table_create cannot be reverted.\n";
+        echo "m200724164355account_table_create cannot be reverted.\n";
 
         return false;
     }

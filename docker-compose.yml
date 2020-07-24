@@ -1,38 +1,37 @@
 version: '3'
-services:
-  php:
-    image: yiisoftware/yii2-php:7.1-apache
-    volumes:
-      - ~/.composer-docker/cache:/root/.composer/cache:delegated
-      - ./:/app:delegated
-    ports:
-      - '8000:80'
-    depends_on:
-      - mysql
-    links:
-      - mysql
 
-  mysql:
-    image: mysql:5.7
+services:
+
+  webserver:
+    build: ./httpd
+    environment:
+      - APACHE_RUN_USER=#1000
     volumes:
-      - ./databases:/var/lib/mysql
+      - .:/var/www/html/
+      - ./httpd:/etc/apache2/sites-available
     ports:
-      - '3306:3306'
+      - 8080:80
+    working_dir: /var/www/html/
+
+  mysqlserver:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: kgdb
+    volumes:
+      - ./databases:/var/lib/mysql
 
   adminer:
     image: adminer
-    restart: 'always'
-    links:
-      - mysql
+    restart: always
     ports:
-      - 8080:8080
+      - 8082:8080
 
   composer:
-    restart: 'no'
-    image: composer
-    command: update
+    image: composer:latest
     volumes:
-    - .:/app
+      - .:/var/www/html/
+    working_dir: /var/www/html/
+    command: composer install

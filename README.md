@@ -2,7 +2,8 @@
 1. run docker-compose up -d --build
 2. run docker-compose exec webserver bash
 3. run php yii migrate on webserver-container and exit
-4. use requests examples (may run in Postman)
+4. go to adminer (localhost:8082 in .yml) and create database kgdb (set in config/db.php)
+5. use requests examples (may run in Postman)
 
 
 Examples

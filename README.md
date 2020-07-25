@@ -1,4 +1,9 @@
 # kg-test
+1. run docker-compose up -d --build
+2. run docker-compose exec webserver bash
+3. run php yii migrate on webserver-container and exit
+4. use requests examples (may run in Postman)
+
 
 Examples
 
